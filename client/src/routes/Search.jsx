@@ -4,6 +4,8 @@ import {
   Avatar,
   Box,
   Button,
+  Chip,
+  Divider,
   Grid,
   IconButton,
   InputAdornment,
@@ -37,10 +39,6 @@ const Search = () => {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input) {
-      Swal.fire("Please provide a Name!", "", "error");
-      return;
-    }
     const data = {
       name: input,
     };
@@ -58,7 +56,7 @@ const Search = () => {
         birthPlace: response.birthPlace,
         fifties: response.fifties,
         wickets: response.wickets,
-        average: response.matches,
+        average: response.average,
         matches: response.matches,
         score: response.score,
         career: response.career,
@@ -66,9 +64,18 @@ const Search = () => {
       });
       setShowData(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setShowData(false);
-      Swal.fire("Internal Server Error!", "", "error");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        Swal.fire(error.response.data.message, "", "error");
+      } else {
+        // If there's no specific message from the backend, show a generic error message
+        Swal.fire("Internal Server Error!", "", "error");
+      }
     }
   };
 
@@ -76,7 +83,7 @@ const Search = () => {
     <>
       <Navbar />
       <Box
-        sx={{ width: { xs: "90%", sm: "80%", md: "50%", lg: "40%" }, my: 4 }}
+        sx={{ width: { xs: "90%", sm: "80%", md: "50%", lg: "40%" }, mt: 15 }}
         mx="auto"
       >
         <form onSubmit={handleSubmit}>
@@ -89,7 +96,7 @@ const Search = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton size="large" type="submit">
+                  <IconButton size="large" type="submit" disabled={!input}>
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -100,8 +107,8 @@ const Search = () => {
         </form>
       </Box>
       {showData && (
-        <Box>
-          <Grid container spacing={2} px={10}>
+        <Box my={5}>
+          <Grid container spacing={2} sx={{ px: { xs: 2, sm: 5, md: 8 } }}>
             <Grid item xs={12} md={3} lg={3}>
               <Paper
                 sx={{
@@ -120,6 +127,9 @@ const Search = () => {
                   src={data.photoUrl}
                 />
                 <h2 style={{ textAlign: "center" }}>{data.name}</h2>
+                <Divider>
+                  <Chip label="Player Info" />
+                </Divider>
                 <h4>Date of Birth: {data.dob}</h4>
                 <h4>Number Of Matches: {data.matches}</h4>
                 <h4>Runs: {data.score}</h4>

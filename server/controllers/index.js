@@ -95,12 +95,6 @@ exports.editById = async (req, res, next) => {
 
 exports.findByName = async (req, res, next) => {
   const { name } = req.body;
-  if (!name) {
-    return res.status(400).json({
-      success: false,
-      message: "Please provide a Name!",
-    });
-  }
   try {
     const result = await Player.findOne({
       where: {

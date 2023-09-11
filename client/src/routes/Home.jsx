@@ -123,7 +123,7 @@ const Home = () => {
       }
     };
     fetchByName();
-  }, []);
+  }, [editMode]);
 
   const editData = async () => {
     const isEmptyFields = validate();
@@ -156,17 +156,21 @@ const Home = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Navbar />
-      <Grid container justifyContent="center" alignItems="center" mt={5}>
-        <Grid item xs={10} md={8} lg={5}>
-          <Card sx={{ p: 2 }}>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        sx={{ mb: { xs: 0, sm: 5, md: 10 }, mt: { xs: 5, md: 10 } }}
+      >
+        <Grid item xs={12} md={8} lg={5}>
+          <Card sx={{ p: 3 }}>
             <CardContent>
               <Typography
                 variant="h4"
                 textAlign={"center"}
-                my={1}
                 sx={{ fontWeight: "bold" }}
               >
-                Player Information
+                {editMode ? "Edit Player Stats" : "Player Information"}
               </Typography>
               <Divider />
               <Box display={"flex"} flexDirection={"column"} gap={2} my={2}>
@@ -230,6 +234,7 @@ const Home = () => {
                 <TextField
                   label="Number of Matches"
                   variant="outlined"
+                  type="number"
                   value={data.matches}
                   onChange={(e) =>
                     setData({
@@ -241,6 +246,7 @@ const Home = () => {
                 <TextField
                   label="Score"
                   variant="outlined"
+                  type="number"
                   value={data.score}
                   onChange={(e) =>
                     setData({
@@ -252,6 +258,7 @@ const Home = () => {
                 <TextField
                   label="Fifties"
                   variant="outlined"
+                  type="number"
                   value={data.fifties}
                   onChange={(e) =>
                     setData({
@@ -263,6 +270,7 @@ const Home = () => {
                 <TextField
                   label="Centuries"
                   variant="outlined"
+                  type="number"
                   value={data.centuries}
                   onChange={(e) =>
                     setData({
@@ -274,6 +282,7 @@ const Home = () => {
                 <TextField
                   label="Wickets"
                   variant="outlined"
+                  type="number"
                   value={data.wickets}
                   onChange={(e) =>
                     setData({
@@ -285,6 +294,7 @@ const Home = () => {
                 <TextField
                   label="Average"
                   variant="outlined"
+                  type="number"
                   value={data.average}
                   onChange={(e) =>
                     setData({

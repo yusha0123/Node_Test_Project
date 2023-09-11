@@ -10,19 +10,19 @@ export default function Navbar() {
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Cricketers
           </Typography>
-          <Button color="inherit" sx={{ mx: 3 }} onClick={() => navigate("/")}>
-            Home
-          </Button>
           <Button
             color="inherit"
-            sx={{ mx: 3 }}
-            onClick={() => navigate("/search")}
+            sx={{ mx: { xs: 0, md: 3, lg: 5 } }}
+            onClick={() => navigate("/")}
           >
+            Home
+          </Button>
+          <Button color="inherit" onClick={() => navigate("/search")}>
             Search
           </Button>
         </Toolbar>
